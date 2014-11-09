@@ -6,8 +6,8 @@ other player here and see the result of your submissions and matches.
 
 %h2 Submit New Bot
 = form_tag submission_path, multipart: true do
-  = file_field_tag 'file'
-  = submit_tag "Submit"
+  = file_field_tag 'file', class: "btn btn-default"
+  = submit_tag "Submit", class: "btn btn-default"
 
 %h2 Bots
 
@@ -41,7 +41,7 @@ other player here and see the result of your submissions and matches.
   %tbody
     - @match.each do |m|
       %tr
-        %td= link_to m.id, match_path(m)
+        %td= m.id
         %td= "#{m.p1_sub.user.login} vs. #{m.p2_sub.user.login}"
         %td= (m.winner == 0 ? "-- draw --" : (m.winner == 1 ? m.p1_sub.user.login : m.p2_sub.user.login))
         %td= m.play_at

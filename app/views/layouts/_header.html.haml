@@ -4,9 +4,15 @@
     %nav
       %ul.nav.navbar-nav.pull-right
         - if session[:user_id] then
-          %li= link_to User.find(session[:user_id]).login,   main_dashboard_path
+          %li= link_to User.find(session[:user_id]).login + "'s Dashboard",   main_dashboard_path
           %li= link_to "Challenge",   main_challenge_list_path
-        %li= link_to "Leaderboard",   '#'
+        %li.dropdown
+          %a.dropdown-toggle(href="#" data-toggle="dropdown")
+            Leaderboard
+            %b.caret
+          %ul.dropdown-menu
+            %li= link_to "Ranking", leaderboard_ranking_path
+            %li= link_to "Recent", leaderboard_recent_path
         %li= link_to "Help",   'http://www.nattee.net/planetwar'
         - if session[:user_id] then
           %li= link_to "Log out", logout_path, method: :delete

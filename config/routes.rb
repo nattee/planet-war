@@ -1,4 +1,7 @@
 PlanetWar::Application.routes.draw do
+  get "leaderboard/recent"
+  get "leaderboard/ranking"
+
   get "submission/create"
 
   get "main/dashboard"
