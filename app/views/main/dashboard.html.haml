@@ -32,14 +32,17 @@ asdfk ;alkdsjf; alksd;fkas;dlk ;al;alks jdlkfa dsvlqkjw vja ;slkdv ;akjew ;lfajw
     %tr
       %th ID
       %th Player
-      %th Score
+      %th Winner
       %th Played
+      %th Status
   %tbody
     - @match.each do |m|
       %tr
         %td= link_to m.id, match_path(m)
         %td= "#{m.p1_sub.user.login} vs. #{m.p2_sub.user.login}"
-        %td= "#{m.score1}/#{m.score2}"
+        %td= (m.winner == 0 ? "-- draw --" : (m.winner == 1 ? m.p1_sub.user.login : m.p2_sub.user.login))
         %td= m.play_at
+        %td= match_text(m)
+          
 
 = will_paginate @match, :renderer => BootstrapPagination::Rails

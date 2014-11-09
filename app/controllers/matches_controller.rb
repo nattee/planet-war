@@ -7,14 +7,14 @@ class MatchesController < ApplicationController
     when 0
       draw = 1
     when 1
-      winner,loser = [@match.p1_sub,@match.p2_sub]
+      winner,loser = [@match.p1_sub.id,@match.p2_sub.id]
     when 2
-      loser,winner = [@match.p1_sub,@match.p2_sub]
+      loser,winner = [@match.p1_sub.id,@match.p2_sub.id]
     end
 
     @data =  "game_id=#{params[:id]}\\n"
-    @data += "winner=#{winner.id}\\nloser=#{loser.id}\\n"
-    #@data += "map_id=#{@match.map}\\n"
+    @data += "winner=#{winner}\\nloser=#{loser}\\n"
+    @data += "map_id=#{@match.map}\\n"
     @data += "map_id=1028\\n"
     @data += "draw=#{draw}\\n"
     @data += "timestamp=#{@match.play_at}\\n"

@@ -2,6 +2,7 @@ PlanetWar::Application.routes.draw do
   get "submission/create"
 
   get "main/dashboard"
+  get "main/challenge_list"
 
   root :to => 'main#home'
 
@@ -9,6 +10,7 @@ PlanetWar::Application.routes.draw do
   post    "main"        =>    "sessions#create"
   delete  "logout"      =>    "sessions#destroy"
   post    "submission"  =>    "submissions#create"
+  post    "challenge"   =>    "main#challenge"
 
   resources :matches
 
