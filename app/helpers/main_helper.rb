@@ -6,7 +6,7 @@ module MainHelper
     when 1
       return "in progress"
     when 2
-      return link_to("(view)", match_path(match))
+      return "Completed " + link_to("(view)", match_path(match))
     end
   end
 end

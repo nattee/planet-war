@@ -1,5 +1,12 @@
 %h1 Dashboard
-asdfk ;alkdsjf; alksd;fkas;dlk ;al;alks jdlkfa dsvlqkjw vja ;slkdv ;akjew ;lfajw elk;j ak.,v am,mfb n.,ne ;le;oihaosdlafewoiuh;p lkjcv lks ;alkd j;vlka ;ir;laa;lskd jf;lkj welkf
+This is your home screen. You can
+%a{href: main_challenge_list_path} challenge
+other player here and see the result of your submissions and matches.
+
+%p
+  %a.btn.btn-default{href: main_challenge_list_path} Challenge
+
+
 
 %h2 Submit New Bot
 = form_tag submission_path, multipart: true do
@@ -19,11 +26,11 @@ asdfk ;alkdsjf; alksd;fkas;dlk ;al;alks jdlkfa dsvlqkjw vja ;slkdv ;akjew ;lfajw
     - @submission.each do |s|
       %tr
         %td= s.id
-        %td= s.language_id
-        %td= s.state
+        %td= s.language.pretty_name
+        %td= submission_state_text(s.state)
         %td= s.created_at
 
-= will_paginate @submission, :renderer => BootstrapPagination::Rails
+= will_paginate @submission, :renderer => BootstrapPagination::Rails, :param_name => "spage"
 
 %h2 Match Record
 
@@ -42,7 +49,7 @@ asdfk ;alkdsjf; alksd;fkas;dlk ;al;alks jdlkfa dsvlqkjw vja ;slkdv ;akjew ;lfajw
         %td= "#{m.p1_sub.user.login} vs. #{m.p2_sub.user.login}"
         %td= (m.winner == 0 ? "-- draw --" : (m.winner == 1 ? m.p1_sub.user.login : m.p2_sub.user.login))
         %td= m.play_at
-        %td= match_text(m)
+        %td= match_text(m).html_safe
           
 
-= will_paginate @match, :renderer => BootstrapPagination::Rails
+= will_paginate @match, :renderer => BootstrapPagination::Rails, :param_name => "mpage"

@@ -4,7 +4,7 @@ class MainController < ApplicationController
 
   def dashboard
     user = User.find(session[:user_id])
-    @submission = Submission.where(user_id: user.id).paginate(:page => params[:spage], :per_page => 2)
+    @submission = Submission.where(user_id: user.id).paginate(:page => params[:spage], :per_page => 10)
     @match = Match.joins('INNER JOIN submissions ON ' +
                             'matches.p1_sub_id = submissions.id OR '+
                             'matches.p2_sub_id = submissions.id ' + 
@@ -13,13 +13,15 @@ class MainController < ApplicationController
   end
 
   def challenge_list
-    @user = User.find(
-      :all,
-      :select => "users.*,count(*) as submission_count",
-      :joins => "INNER JOIN submissions on users.id = submissions.user_id and submissions.state = 2",
-      :group => "users.id",
-      :where => "submission_count > 0"
-    )
+    #@user = User.find(
+    #  :select => "users.*,count(*) as submission_count",
+    #  :where => "submission_count > 0",
+    #  :joins => "INNER JOIN submissions on users.id = submissions.user_id and submissions.state = 2",
+    #  :group => "users.id"
+    #)
+    @user = User.select("*,count(*) as submission_count")
+                .joins("INNER JOIN submissions on users.id = submissions.user_id and submissions.state = 2")
+                .group(:id).having("submission_count > 0")
   end
 
   def challenge
