@@ -1,0 +1,22 @@
+%h1 Challenge other player
+%p
+  Click on a "challenge" button to challenge a player. A match against the newest bot of that player will be scheduled. Normally, the match should be run in the next 10 seconds. Check back at your
+  %a{href: main_dashboard_path} Dashboard
+  for the result
+
+%h2 Players
+%table.table.table-condensed
+  %thead
+    %tr
+      %td ID
+      %td Login
+      %td Action
+  %tbody
+    - @user.each do |u|
+      - next if u.id = session[:user_id]
+      %tr
+        %td u.id
+        %td u.login
+        %td
+          %a.btn{href: challenge_path(u.id)} Challenge
+

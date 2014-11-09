@@ -39,8 +39,6 @@ class User < ActiveRecord::Base
   attr_accessor :password
 
   before_save :encrypt_new_password
-  before_save :assign_default_site
-  before_save :assign_default_contest
 
   # this is for will_paginate
   cattr_reader :per_page

@@ -19,7 +19,7 @@ class MainController < ApplicationController
     #  :joins => "INNER JOIN submissions on users.id = submissions.user_id and submissions.state = 2",
     #  :group => "users.id"
     #)
-    @user = User.select("*,count(*) as submission_count")
+    @user = User.select("users.*,count(*) as submission_count")
                 .joins("INNER JOIN submissions on users.id = submissions.user_id and submissions.state = 2")
                 .group(:id).having("submission_count > 0")
   end

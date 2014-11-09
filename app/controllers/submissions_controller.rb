@@ -21,7 +21,7 @@ class SubmissionsController < ApplicationController
       if @submission.save == false then
         flash[:notice] = 'Error saving your submission'
       else
-        @submisssion.do_compile
+        @submission.process_new_submission
         #copy file to the specific folder
         #folder = SUBMISSION_FOLDER+"/#{@submission.id}/"
         #FileUtils.mkdir_p folder
@@ -30,4 +30,6 @@ class SubmissionsController < ApplicationController
     end
     redirect_to controller: :main, action: :dashboard
   end
+
+
 end
