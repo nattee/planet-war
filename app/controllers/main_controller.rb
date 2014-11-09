@@ -1,5 +1,8 @@
 class MainController < ApplicationController
+  before_filter :authenticated, only: [:dashboard, :challenge_list, :challenge]
+
   def home
+    redirect_to main_dashboard_path if session[:user_id]
   end
 
   def dashboard

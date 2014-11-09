@@ -3,12 +3,13 @@ class SubmissionsController < ApplicationController
     user = User.find(session[:user_id])
 
     @submission = Submission.new
-    @submission.user_id = user_id
+    @submission.user = user
     @submission.language_id = 0
     if (params['file']) and (params['file']!='')
       @submission.code = File.open(params['file'].path,'r:UTF-8',&:read)
       @submission.code.encode!('UTF-8','UTF-8',invalid: :replace, replace: '')
       @submission.filename = params['file'].original_filename
+      @submission.language = Language.find_by_extension(params['file'].original_filename.split('.').last)
     end
     @submission.ip_address = request.remote_ip
     @submission.state = 0

@@ -3,7 +3,10 @@
     = link_to "Planet War", root_path, id: "logo"
     %nav
       %ul.nav.navbar-nav.pull-right
-        %li= link_to "Home",   root_path
-        %li= link_to "Help",   '#'
+        - if session[:user_id] then
+          %li= link_to User.find(session[:user_id]).login,   main_dashboard_path
+          %li= link_to "Challenge",   main_challenge_list_path
+        %li= link_to "Leaderboard",   '#'
+        %li= link_to "Help",   'http://www.nattee.net/planetwar'
         - if session[:user_id] then
           %li= link_to "Log out", logout_path, method: :delete
