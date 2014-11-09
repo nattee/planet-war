@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  type: 1
+  params: 
+  state: 1
+  finished_at: 2014-11-08 13:01:38
+
+two:
+  type: 1
+  params: 
+  state: 1
+  finished_at: 2014-11-08 13:01:38

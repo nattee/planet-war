@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  p1_sub: 
+  p2_sub: 
+  score1: 1
+  score2: 1
+  map: MyString
+  play_at: 
+
+two:
+  p1_sub: 
+  p2_sub: 
+  score1: 1
+  score2: 1
+  map: MyString
+  play_at: 

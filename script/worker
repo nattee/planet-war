@@ -1,0 +1,146 @@
+#!/usr/bin/env ruby
+
+require './run_match.rb'
+
+def stop_grader(id)
+  if id==:all
+    File.open(File.dirname(__FILE__) + "/stop.all",'w').close
+  else
+    File.open(File.dirname(__FILE__) + "/stop.#{id}",'w').close
+  end
+end
+
+def check_stopfile
+  FileTest.exist?(File.dirname(__FILE__) + "/stop.all") or
+    FileTest.exist?(File.dirname(__FILE__) + "/stop.#{Process.pid}")
+end
+
+def clear_stopfile
+  if FileTest.exist?(File.dirname(__FILE__) + "/stop.#{Process.pid}")
+    File.delete(File.dirname(__FILE__) + "/stop.#{Process.pid}")
+  end
+end
+
+def log_file_name
+  if !File.exists?(LOG_FOLDER)
+    raise "Log directory does not exist: #{LOG_FOLDER}"
+  end
+  LOG_FOLDER + "/worker.#{Process.pid}"
+end
+
+def log(str)
+  puts str
+  fp = File.open(log_file_name,"a")
+  fp.puts("WORKEr: #{Time.new.strftime("%H:%M")} #{str}")
+  fp.close
+end
+
+def display_manual
+  puts <<USAGE
+Grader.
+using: (1) worker start
+       (2) worker stop [all|pids-list]
+       (3) worker --help
+(1) start the worker process
+(2) create stop-file to stop running grader in queue mode
+(3) You are here.
+USAGE
+end
+
+def process_options_and_stop_file
+  # Process 'help' option
+  if ((ARGV.length==1) and (/help/.match(ARGV[0]))) or (ARGV.length==0)
+    display_manual
+    exit(0)
+  end
+
+  # Process 'stop' option.
+  if (ARGV.length >= 1) and (ARGV[0]=='stop')
+    if ARGV.length==1
+      puts "you should specify pid-list or 'all'"
+      display_manual
+    elsif (ARGV.length==2) and (ARGV[1]=='all')
+      stop_grader(:all)
+      puts "A global stop file ('stop.all') created."
+      puts "You should remove it manually later."
+    else
+      (1..ARGV.length-1).each do |i|
+        stop_grader(ARGV[i])
+      end
+      puts "stop file(s) created"
+    end
+    exit(0)
+  end
+end
+
+def get_task_priority(priority)
+  t = Task.where(priority: priority,state: 0).order(id: :desc).limit(1)
+  if (t.size > 0)
+    t[0].state = 1
+    t[0].save
+    return t[0]
+  end
+  return nil
+end
+
+def get_task
+  #find high priority task
+  t = get_task_priority(1)
+  return t if t
+  return get_task_priority(0)
+end
+
+def perform(task)
+  log "doing task #{task.id}"
+  cmd = "#{File.join WORKSPACE_ROOT,'../script/run_match'} #{task.match_id}"
+  begin
+    run_match(task.match_id.to_s)
+  ensure
+    task.state = 2
+    task.finished_at = Time.now.in_time_zone
+    task.save
+  end
+end
+
+#########################################
+# main program
+#########################################
+
+process_options_and_stop_file
+require File.join(File.dirname(__FILE__),'../config/environment')
+
+
+# reading rails environment
+log 'Reading rails environment'
+
+#set loggin environment
+err_file_name = log_file_name + '.err'
+#$stderr.reopen(err_file_name,"a")
+log "STDERR log to file [#{err_file_name}]"
+warn "start logging for grader PID #{Process.pid} on #{Time.now.in_time_zone}"
+
+
+# register exit handler to report inactive, and terminated
+at_exit do
+end
+
+#
+# MAIN LOOP
+#
+
+while true do
+  if check_stopfile    # created by calling grader stop
+    clear_stopfile
+    log "stopped (with stop file)"
+    break
+  end
+
+  task = get_task
+  perform task if task
+
+  if task==nil
+    sleep(1)
+    puts "No task..."
+  end
+end
+

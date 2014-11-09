@@ -1,0 +1,3 @@
+[paths]
+default = https://nattee@bitbucket.org/nattee/planet-war
+github = git+ssh://git@github.com/nattee/planet-war

@@ -1,0 +1,45 @@
+%h1 Dashboard
+asdfk ;alkdsjf; alksd;fkas;dlk ;al;alks jdlkfa dsvlqkjw vja ;slkdv ;akjew ;lfajw elk;j ak.,v am,mfb n.,ne ;le;oihaosdlafewoiuh;p lkjcv lks ;alkd j;vlka ;ir;laa;lskd jf;lkj welkf
+
+%h2 Submit New Bot
+= form_tag submission_path, multipart: true do
+  = file_field_tag 'file'
+  = submit_tag "Submit"
+
+%h2 Bots
+
+%table.table.table-hover.table-condensed.table-responsive
+  %thead
+    %tr
+      %th ID
+      %th Language
+      %th Status
+      %th Submit Time
+  %tbody
+    - @submission.each do |s|
+      %tr
+        %td= s.id
+        %td= s.language_id
+        %td= s.state
+        %td= s.created_at
+
+= will_paginate @submission, :renderer => BootstrapPagination::Rails
+
+%h2 Match Record
+
+%table.table.table-hover.table-condensed.table-responsive
+  %thead
+    %tr
+      %th ID
+      %th Player
+      %th Score
+      %th Played
+  %tbody
+    - @match.each do |m|
+      %tr
+        %td= link_to m.id, match_path(m)
+        %td= "#{m.p1_sub.user.login} vs. #{m.p2_sub.user.login}"
+        %td= "#{m.score1}/#{m.score2}"
+        %td= m.play_at
+
+= will_paginate @match, :renderer => BootstrapPagination::Rails

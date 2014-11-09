@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  pretty_name: MyString
+  ext: MyString
+  common_ext: MyString
+
+two:
+  name: MyString
+  pretty_name: MyString
+  ext: MyString
+  common_ext: MyString
