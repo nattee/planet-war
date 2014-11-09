@@ -13,10 +13,10 @@
       %td Action
   %tbody
     - @user.each do |u|
-      - next if u.id = session[:user_id]
+      - next if u.id == session[:user_id]
       %tr
-        %td u.id
-        %td u.login
+        %td= u.id
+        %td= u.login
         %td
-          %a.btn{href: challenge_path(u.id)} Challenge
+          %a.btn{href: "/challenge_confirm/#{(u.id)}"} Challenge
 

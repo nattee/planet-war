@@ -1,0 +1,10 @@
+%h1 Challenge Confirmation
+
+%p
+  Do you want to challenge
+  = @opp_s.user.login
+  ?
+
+%p
+  %a.btn{href: "/do_challenge/#{@s.id}/#{@opp_s.id}"} Yes
+  %a.btn{href: "/challenge_list"} No

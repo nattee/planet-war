@@ -3,10 +3,6 @@ This is your home screen. You can
 %a{href: main_challenge_list_path} challenge
 other player here and see the result of your submissions and matches.
 
-%p
-  %a.btn.btn-default{href: main_challenge_list_path} Challenge
-
-
 
 %h2 Submit New Bot
 = form_tag submission_path, multipart: true do
@@ -52,4 +48,4 @@ other player here and see the result of your submissions and matches.
         %td= match_text(m).html_safe
           
 
-= will_paginate @match, :renderer => BootstrapPagination::Rails, :param_name => "mpage"
+//= will_paginate @match, :renderer => BootstrapPagination::Rails, :param_name => "mpage"

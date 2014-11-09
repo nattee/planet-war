@@ -41,11 +41,15 @@ class Match < ActiveRecord::Base
     #process output
     log_text = File.read(log_file)
     log_text.gsub!(/\'/,'"')
-    result = JSON.parse(log_text)
-    self.winner = result["winner"]
-    self.log = result["playback"]
-    self.play_at = Time.now
-    self.state = 2
+    begin
+      result = JSON.parse(log_text)
+      self.winner = result["winner"]
+      self.log = result["playback"]
+      self.play_at = Time.now
+      self.state = 2
+    rescue
+      self.state = -1
+    end
     self.save
 
     puts "  Engine was run successfully"

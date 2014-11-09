@@ -10,7 +10,8 @@ PlanetWar::Application.routes.draw do
   post    "main"        =>    "sessions#create"
   delete  "logout"      =>    "sessions#destroy"
   post    "submission"  =>    "submissions#create"
-  post    "challenge"   =>    "main#challenge"
+  get     "challenge_confirm/:id"    =>    "main#challenge_confirm"
+  get     "do_challenge/:p1_id/:p2_id"    =>    "main#do_challenge"
 
   resources :matches
 
