@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141109132628) do
+ActiveRecord::Schema.define(:version => 20141118164206) do
 
   create_table "jail_users", :primary_key => "jail_user_id", :force => true do |t|
     t.integer "in_use",   :limit => 1,  :default => 0
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(:version => 20141109132628) do
     t.integer  "state",                          :default => 0
     t.integer  "match_type",                     :default => 0
     t.integer  "map_id"
+    t.string   "p1_err"
+    t.string   "p2_err"
   end
 
   add_index "matches", ["p1_sub_id"], :name => "index_matches_on_p1_sub_id"

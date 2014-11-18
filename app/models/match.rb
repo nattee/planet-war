@@ -46,6 +46,10 @@ class Match < ActiveRecord::Base
       self.winner = result["winner"]
       self.log = result["playback"]
       self.play_at = Time.now
+      puts "  p1 " + result["errors_data"][0]["error"] if result.try(:[],"errors_data").try(:[],0).try(:[],"error")
+      puts "  p2 " + result["errors_data"][1]["error"] if result.try(:[],"errors_data").try(:[],1).try(:[],"error")
+      self.p1_err = Match.parse_error_message result.try(:[],"errors_data").try(:[],0).try(:[],"error")
+      self.p2_err = Match.parse_error_message result.try(:[],"errors_data").try(:[],1).try(:[],"error")
       self.state = 2
     rescue
       self.state = -1
@@ -77,6 +81,16 @@ class Match < ActiveRecord::Base
     end
 
     puts "Match #{id} is done"
+  end
+
+  def self.parse_error_message( txt )
+    return case txt
+    when 'TIMEOUT' then 'crashed / did not start / timeout'
+    when 'BAD_ORDER' then 'issued an invalid order'
+    when 'UNPARSEABLE_ORDER' then 'issued an order that could not be parsed'
+    else
+      nil
+    end
   end
 
 end
