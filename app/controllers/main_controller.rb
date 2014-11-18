@@ -15,7 +15,7 @@ class MainController < ApplicationController
                             'INNER JOIN users ON submissions.user_id = users.id')
                   .where("users.id = ?",user.id)
                   .order("matches.id DESC")
-                  .group(:id)
+                  .group("matches.id")
                   .paginate(page: params[:mpage])
   end
 
