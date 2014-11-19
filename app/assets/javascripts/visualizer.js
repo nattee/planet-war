@@ -4,7 +4,6 @@ var Visualizer = {
     frame: 0,
     frameSpeed: 0.1,
     playing: false,
-    haveDrawnBackground: false,
     frameDrawStarted: null,
     frameDrawEnded: null,
     players: ["Player A", "Player B"],
@@ -88,10 +87,6 @@ var Visualizer = {
 
       // Draw background
       ctx.fillStyle = '#000';
-      if(this.haveDrawnBackground==false){
-        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        this.haveDrawnBackground = true;
-      }
       for(var i = 0; i < this.dirtyRegions.length; i++) {
         var region = this.dirtyRegions[i];
         ctx.fillRect(
@@ -101,6 +96,8 @@ var Visualizer = {
           parseInt(region[3])
         );
       }
+        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+				ctx.drawImage(document.getElementById('bg'),0,0);
       this.dirtyRegions = [];
     },
 
