@@ -33,13 +33,13 @@ class MainController < ApplicationController
 
   def challenge_confirm
     #validate user submission
-    @s = Submission.where("user_id = ? and state >= 2",session[:user_id]).order(id: :desc).first
+    @s = Submission.where("user_id = ? and state >= 2",session[:user_id]).last
     unless @s then
       flash[:danger] = "you don't have eligible submission"
       return redirect_to main_dashboard_path
     end
 
-    @opp_s = Submission.where("user_id = ? and state >= 2",params[:id]).order(id: :desc).first
+    @opp_s = Submission.where("user_id = ? and state >= 2",params[:id]).last
     unless @opp_s then
       flash[:danger] = "Opponent doesn't have eligible submission"
       return redirect_to main_dashboard_path
