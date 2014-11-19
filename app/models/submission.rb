@@ -33,7 +33,7 @@ class Submission < ActiveRecord::Base
     bot_name = folder + "bot"
     case self.language.name
     when "cpp"
-      cmd = "g++ -o #{bot_name} #{source_name} #{WORKSPACE_ROOT}/lib/cpp/PlanetWars.cc -I#{WORKSPACE_ROOT}/lib/cpp"
+      cmd = "g++ -o #{bot_name} #{source_name} #{WORKSPACE_ROOT}/lib/cpp/PlanetWars.cc -I#{WORKSPACE_ROOT}/lib/cpp --std=c++11"
       puts "cmd = #{cmd}"
       system(cmd,err: compiler_message)
       self.compiler_message = File.read(compiler_message)
@@ -52,7 +52,11 @@ class Submission < ActiveRecord::Base
   end
 
   def process_new_submission
-    do_compile
+    begin
+      do_compile
+    rescue
+      flash[:danger] = "Compilation Error"
+    end
     if state == 1 then
       set_compulsory_match(NOOP_SUBMISSION_ID,Match::COMPULSORY)
     end

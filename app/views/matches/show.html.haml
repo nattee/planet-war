@@ -2,20 +2,23 @@
   Match
   = @match.id
 
-%div.alert-danger.alert
-  - if @match.p1_err
-    = "#{@match.p1_sub.user.login} ERROR: #{@match.p1_err}"
-    %br
-  - if @match.p2_err
-    = "#{@match.p2_sub.user.login} ERROR: #{@match.p2_err}"
+- if @match.p1_err or @match.p2_err
+  %div.alert-danger.alert
+    - if @match.p1_err
+      = "#{@match.p1_sub.user.login} ERROR: #{@match.p1_err}"
+      %br
+    - if @match.p2_err
+      = "#{@match.p2_sub.user.login} ERROR: #{@match.p2_err}"
 
-%img{src:"bg2.png", display:"none"}
-%div#visualizer
-  %table#players
-    %tr
-      %td.player1Name{width:'40%', style:"text-align:right"}
-      %td.playerVS{width:'20%',style:"text-align:center"}
-      %td.player2Name{width:'40%',style:"text-align:left"}
+%img#bg{src:"/bg2.jpg", style:  "display:none;"}
+%div#visualizer{style: "width:640px;"}
+  %table#players{width:640}
+    %tbody
+      %tr
+        %td.player1Name{width:'40%', style:"text-align:right"}
+        %td.playerVS{width:'20%',style:"text-align:center"}
+          v.s.
+        %td.player2Name{width:'40%',style:"text-align:left"}
   %canvas#display{width:"640", height:"640"}
   %p#error_message
   %p#turnCounter
