@@ -14,7 +14,6 @@ class SubmissionsController < ApplicationController
     @submission.ip_address = request.remote_ip
     @submission.state = 0
 
-
     #check for submission allow?
 
     #save submission
@@ -28,6 +27,8 @@ class SubmissionsController < ApplicationController
         #FileUtils.mkdir_p folder
         #FileUtils.cp(params['file'].path,folder+params['file'].original_filename)
       end
+    else
+      flash[:error] = 'You must select a file for upload'
     end
     redirect_to controller: :main, action: :dashboard
   end

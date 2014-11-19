@@ -22,7 +22,7 @@ other player here and see the result of your submissions and matches.
     - @submission.each do |s|
       %tr
         %td= s.id
-        %td= s.language.pretty_name
+        %td= s.try(:language).try(:pretty_name)
         %td= submission_state_text(s.state)
         %td= s.created_at
 

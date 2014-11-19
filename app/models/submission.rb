@@ -7,6 +7,8 @@ class Submission < ActiveRecord::Base
   has_many :as_p1, :class_name => "Match", :foreign_key => "p1_sub_id"
   has_many :as_p2, :class_name => "Match", :foreign_key => "p2_sub_id"
 
+  validates_presence_of :code
+
   #state
   QUALIFYING_FAIL = -3
   COMPULSORY_FAIL = -2
@@ -15,8 +17,6 @@ class Submission < ActiveRecord::Base
   COMPILED = 1
   COMPULSORIZED = 2
   QUALIFIED = 3
-
-
 
   def do_compile
     #prepare folder
