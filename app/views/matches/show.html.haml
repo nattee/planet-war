@@ -2,10 +2,10 @@
   Match
   = @match.id
 
-%p{style: "color: red"}
+%div.alert-danger.alert
   - if @match.p1_err
     = "#{@match.p1_sub.user.login} ERROR: #{@match.p1_err}"
-%p{style: "color: red"}
+    %br
   - if @match.p2_err
     = "#{@match.p2_sub.user.login} ERROR: #{@match.p2_err}"
 
@@ -29,13 +29,6 @@
     <a href="#" id="speedup" title="Speed up (up arrow)">+</a>
   %p
     %canvas#chart{width:"640", height:"100"}
-
-
-%p#error_message
-  - if @match.p1_err
-    = "#{@match.p1_sub.user.login} #{@match.p1_err}"
-  - if @match.p2_err
-    = "#{@match.p2_sub.user.login} #{@match.p2_err}"
 
 :javascript
   var data = "#{@data}"

@@ -35,13 +35,13 @@ class MainController < ApplicationController
     #validate user submission
     @s = Submission.where("user_id = ? and state >= 2",session[:user_id]).order(id: :desc).first
     unless @s then
-      flash[:error] = "you don't have eligible submission"
+      flash[:danger] = "you don't have eligible submission"
       return redirect_to main_dashboard_path
     end
 
     @opp_s = Submission.where("user_id = ? and state >= 2",params[:id]).order(id: :desc).first
     unless @opp_s then
-      flash[:error] = "Opponent doesn't have eligible submission"
+      flash[:danger] = "Opponent doesn't have eligible submission"
       return redirect_to main_dashboard_path
     end
 
@@ -52,11 +52,11 @@ class MainController < ApplicationController
     s2 = Submission.find(params[:p2_id])
     user = User.find(session[:user_id])
     if (s1.user != user) or (s1.state < 2) then
-      flash[:error] = "You don't have permission to challenge"
+      flash[:danger] = "You don't have permission to challenge"
       return redirect_to main_dashboard_path
     end
     if (s2.state < 2) then 
-      flash[:error] = "Opponent doesn't have eligible submission"
+      flash[:danger] = "Opponent doesn't have eligible submission"
       return redirect_to main_dashboard_path
     end
     #create match
@@ -71,7 +71,7 @@ class MainController < ApplicationController
     t.match_id = m.id
     t.save
 
-    flash[:notice] = "A challenge is scheduled. It will take sometime before match is completed."
+    flash[:info] = "A challenge is scheduled. It will take sometime before match is completed."
     redirect_to main_challenge_list_path
   end
 end

@@ -6,5 +6,5 @@
   ?
 
 %p
-  %a.btn{href: "/do_challenge/#{@s.id}/#{@opp_s.id}"} Yes
-  %a.btn{href: "/challenge_list"} No
+  %a.btn{href: "#{do_challenge_path(@s.id,@opp_s.id)}"} Yes
+  %a.btn{href: "#{main_challenge_list_path}"} No

@@ -20,5 +20,5 @@
         %td= u.id
         %td= u.login
         %td
-          %a.btn{href: "/challenge_confirm/#{(u.id)}"} Challenge
+          %a.btn{href: "#{confirm_challenge_path(u.id)}"} Challenge
 

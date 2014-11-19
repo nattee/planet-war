@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to controller: :main, action: :dashboard
     else
-      flash[:notice] = "Invalid username/password"
+      flash[:danger] = "Invalid username/password"
       redirect_to controller: :main, action: :home
     end
   end

@@ -19,7 +19,7 @@ class SubmissionsController < ApplicationController
     #save submission
     if @submission.valid?
       if @submission.save == false then
-        flash[:notice] = 'Error saving your submission'
+        flash[:danger] = 'Error saving your submission'
       else
         @submission.process_new_submission
         #copy file to the specific folder
@@ -28,7 +28,7 @@ class SubmissionsController < ApplicationController
         #FileUtils.cp(params['file'].path,folder+params['file'].original_filename)
       end
     else
-      flash[:error] = 'You must select a file for upload'
+      flash[:danger] = 'You must select a file for upload'
     end
     redirect_to controller: :main, action: :dashboard
   end
