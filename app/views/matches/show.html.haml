@@ -9,7 +9,7 @@
   - if @match.p2_err
     = "#{@match.p2_sub.user.login} ERROR: #{@match.p2_err}"
 
-
+%img{src:"bg2.png", display:"none"}
 %div#visualizer
   %table#players
     %tr
@@ -20,10 +20,10 @@
   %p#error_message
   %p#turnCounter
   %p#controls
-    <a href="#" id="start-button" title="To start"><span class="small">|</span>&laquo;</a> | 
-    <a href="#" id="prev-frame-button" title="Step back (left arrow)">&laquo;</a> | 
-    <a href="#" id="play-button" title="Play/Pause (spacebar)">&#9654;</a> | 
-    <a href="#" id="next-frame-button" title="Step forward (right arrow)">&raquo;</a> | 
+    <a href="#" id="start-button" title="To start"><span class="small">|</span>&laquo;</a> |
+    <a href="#" id="prev-frame-button" title="Step back (left arrow)">&laquo;</a> |
+    <a href="#" id="play-button" title="Play/Pause (spacebar)">&#9654;</a> |
+    <a href="#" id="next-frame-button" title="Step forward (right arrow)">&raquo;</a> |
     <a href="#" id="end-button" title="To end">&raquo;<span class="small">|</span></a><br />
     <a href="#" id="speeddown" title="Slow down (down arrow)">-</a>
     <a href="#" id="speedup" title="Speed up (up arrow)">+</a>
