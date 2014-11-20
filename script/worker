@@ -141,7 +141,7 @@ while true do
   perform task if task
 
   if task==nil
-    sleep(1)
+    sleep(2)
   end
 end
 
