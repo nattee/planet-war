@@ -43,7 +43,25 @@ class Submission < ActiveRecord::Base
         raise "Compilation error"
       end
     when "java"
+      classname = File.basename(self.filename,".*")
+      cmd = "javac #{source_name} -cp #{WORKSPACE_ROOT}/lib/java:#{folder}"
+      puts "cmd = #{cmd}"
+      system(cmd,err: compiler_message)
+      self.compiler_message = File.read(compiler_message)
 
+      #check compiler error
+      result_file = File.join(folder,classname+".class")
+      puts "check for #{result_file}"
+      unless File.exists?(result_file) then
+        self.state = -1
+        self.save
+        raise "Compilation error"
+      end
+
+      #gen script
+      script_file = File.join(folder,"bot")
+      File.write(script_file,"java -cp #{WORKSPACE_ROOT}/lib/java:#{folder} #{classname}")
+      FileUtils.chmod "a+x", script_file
     end
 
     #save state
